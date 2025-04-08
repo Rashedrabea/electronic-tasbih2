@@ -1,0 +1,671 @@
+:root {
+    --primary-color: #4a90e2;
+    /* أزرق فاتح أكثر حيوية */
+    --secondary-color: #2ecc71;
+    /* أخضر منعش */
+    --text-color: #2c3e50;
+    /* رمادي داكن للنصوص */
+    --bg-color: #f8fafd;
+    /* خلفية فاتحة مائلة للأزرق */
+    --card-color: #ffffff;
+    /* أبيض نقي للبطاقات */
+}
+
+/* وضع الليلي ( يتم تفعيله عبر js) */
+.dark-mode {
+    --primary-color: #74b9ff;
+    --secondary-color: #55e6c1;
+    --text-color: #f5f6fa;
+    --bg-color: #2d3436;
+    --card-color: #3c4249;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* التنسيقات العامه */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    /* تاثير انتقالي للتغييرات */
+    padding: 10px;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 100%;
+    width: 100%;
+    padding: 0 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* تصمم البانر */
+.banner {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    color: white;
+    grid-column: 1 / -1;
+    width: 100%;
+    margin: 0 0 20px 0;
+    position: relative;
+}
+
+.admin-btn {
+    position: absolute;
+    left: 130px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 8px 15px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.admin-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-50%) scale(1.05);
+}
+
+.banner-emoji {
+    font-size: 3rem;
+    margin-left: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* حذف التنسيقات القديمة للصورة */
+.banner-img {
+    display: none;
+}
+
+/* تصميم اعداد */
+.counter-box {
+    background-color: var(--card-color);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 0;
+}
+
+#counter {
+    font-size: 4rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin: 20px 0;
+}
+
+/* ازرار التسبيح الاساسية */
+
+.tasbeeh-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.tasbeeh-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--secondary-color);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tasbeeh-btn:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+.tasbeeh-btn.active {
+    background-color: #e84393;
+}
+
+.dark-section {
+    background-color: var(--card-color);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    margin-bottom: 20px;
+}
+
+.dark-section h2 {
+    background-color: var(--secondary-color);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#dhikrCategory {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: var(--card-color);
+    color: var(--text-color);
+}
+
+.dhikr-content {
+    line-height: 2;
+}
+
+.dhikr-content h3 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+#customDhikr {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    resize: none;
+    background-color: var(--card-color);
+    color: var(--text-color);
+}
+
+#saveCustomBtn {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#saveCustomBtn:hover {
+    background-color: #00a884;
+    /* لون داكن عند التمرير */
+}
+
+.btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+.btn.reset {
+    background-color: var(--secondary-color);
+}
+
+.btn.mode-toggle {
+    position: fixed;
+    top: 20px;
+    left: 30px;
+    padding: 10px;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.btn.sound-toggle {
+    position: fixed;
+    top: 20px;
+    left: 75px;
+    padding: 10px;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.stats {
+    padding: 15px;
+    background-color: var(--card-color);
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    padding: 12px;
+    border-bottom: 1px solid var(--secondary-color);
+    transition: background-color 0.3s ease;
+}
+
+.stat-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.date-stats {
+    font-size: 0.9em;
+    color: var(--secondary-color);
+}
+
+#totalCount {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+#mostUsedDhikr {
+    color: var(--secondary-color);
+    font-weight: bold;
+}
+
+.radio-container {
+    padding: 15px;
+    background-color: var(--card-color);
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.radio-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.volume-control {
+    flex: 1;
+}
+
+#volumeSlider {
+    width: 100%;
+    height: 5px;
+    -webkit-appearance: none;
+    background: var(--primary-color);
+    border-radius: 5px;
+    outline: none;
+}
+
+#volumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--secondary-color);
+    cursor: pointer;
+}
+
+#radioStation {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 8px;
+    background-color: var(--card-color);
+    color: var(--text-color);
+}
+
+/* تنسيقات القرآن والأحاديث */
+.scripture-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: var(--bg-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.tab-btn.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.verse-card,
+.hadith-card {
+    background: var(--card-color);
+    border-right: 4px solid var(--primary-color);
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.verse-card:hover,
+.hadith-card:hover {
+    transform: translateX(-5px);
+}
+
+.verse-text,
+.hadith-text {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    line-height: 1.8;
+}
+
+.verse-reference,
+.hadith-narrator {
+    color: var(--secondary-color);
+    font-size: 0.9em;
+    font-style: italic;
+}
+
+.share-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: transform 0.3s;
+    color: white;
+    font-weight: bold;
+}
+
+.share-btn.whatsapp {
+    background: #25D366;
+}
+
+.share-btn.telegram {
+    background: #0088cc;
+}
+
+.share-btn.facebook {
+    background: #1877f2;
+}
+
+.share-btn.copy {
+    background: var(--primary-color);
+}
+
+.share-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+/* تنسيق جديد للأقسام المتجاورة */
+@media (min-width: 992px) {
+    .counter-section {
+        grid-column: span 2;
+    }
+
+    .dhikr-section {
+        grid-column: span 3;
+    }
+
+    .radio-section {
+        grid-column: span 2;
+    }
+
+    .stats-section {
+        grid-column: span 2;
+    }
+}
+
+/* إضافة تنسيقات جديدة للعرض المتجاوب */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* تحسين مظهر الأزرار الثابتة */
+.fixed-controls {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.scroll-top {
+    padding: 10px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.scroll-top.visible {
+    opacity: 1;
+}
+
+/* تحسينات نافذة الذكر السريع للموبايل */
+.quick-dhikr-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 20px;
+}
+
+.modal-content {
+    background: var(--card-color);
+    padding: 25px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 90vh;
+    position: relative;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+}
+
+/* تنسيقات جديدة للمحتوى */
+.modal-description {
+    margin-bottom: 15px;
+    font-size: 0.9em;
+    color: var(--text-color);
+}
+
+.quick-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.quick-buttons button {
+    padding: 12px;
+    font-size: 1rem;
+}
+
+/* تحسين زر الإغلاق */
+.close-modal {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 30px;
+    height: 30px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* تنسيقات خاصة للموبايل */
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 20px 15px;
+        margin: 10px;
+        max-height: 80vh;
+    }
+
+    .quick-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-buttons button {
+        padding: 15px;
+        font-size: 1.1rem;
+    }
+}
+
+.dhikr-progress {
+    width: 100%;
+    height: 4px;
+    background: #eee;
+    border-radius: 2px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: var(--primary-color);
+    transition: width 0.3s linear;
+}
+
+.empty-message {
+    padding: 20px;
+    text-align: center;
+    color: var(--text-color);
+    background: var(--bg-color);
+    border-radius: 8px;
+    margin: 10px 0;
+    font-style: italic;
+}
+
+/* تنسيقات حقوق النشر */
+.copyright {
+    text-align: center;
+    padding: 25px;
+    margin-top: 40px;
+    background: linear-gradient(145deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.copyright-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.copyright p {
+    margin: 8px 0;
+    color: white;
+    font-size: 1.1em;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.copyright small {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9em;
+}
+
+/* تنسيقات أزرار المشاركة */
+.social-share {
+    background: var(--card-color);
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.share-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: transform 0.3s;
+    color: white;
+    font-weight: bold;
+}
+
+.share-btn.whatsapp {
+    background: #25D366;
+}
+
+.share-btn.telegram {
+    background: #0088cc;
+}
+
+.share-btn.facebook {
+    background: #1877f2;
+}
+
+.share-btn.copy {
+    background: var(--primary-color);
+}
+
+.share-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.share-btn img {
+    width: 24px;
+    height: 24px;
+}

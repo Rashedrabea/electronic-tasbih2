@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - المسبحة الإلكترونية</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <script>
+        // التحقق من تسجيل الدخول
+        if (!localStorage.getItem('isLoggedIn')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <nav class="dashboard-nav">
+            <h1>لوحة التحكم</h1>
+            <div>
+                <a href="index.html" class="nav-link">العودة للمسبحة</a>
+                <button onclick="logout()" class="nav-link">تسجيل خروج</button>
+            </div>
+        </nav>
+
+        <div class="dashboard-grid">
+            <!-- إحصائيات عامة -->
+            <div class="dashboard-card">
+                <h2>الإحصائيات العامة</h2>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <h3>إجمالي التسبيحات</h3>
+                        <span id="totalDhikr">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <h3>عدد الأيام النشطة</h3>
+                        <span id="activeDays">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <h3>أكثر الأذكار تكراراً</h3>
+                        <div id="topDhikrs"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- إدارة الأذكار -->
+            <div class="dashboard-card">
+                <h2>إدارة الأذكار</h2>
+                <div class="dhikr-manager">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" data-tab="morning">أذكار الصباح</button>
+                        <button class="tab-btn" data-tab="evening">أذكار المساء</button>
+                        <button class="tab-btn" data-tab="hadith">الأحاديث النبوية</button>
+                    </div>
+
+                    <div class="tab-content active" id="morning-content">
+                        <form class="add-form">
+                            <div class="form-group">
+                                <input type="text" placeholder="أضف ذكر جديد" required>
+                                <input type="number" placeholder="عدد التكرار" min="1" required>
+                                <button type="submit" class="add-button">إضافة ذكر جديد</button>
+                            </div>
+                        </form>
+                        <div class="items-list" id="morning-list"></div>
+                    </div>
+
+                    <div class="tab-content" id="evening-content">
+                        <form class="add-form">
+                            <div class="form-group">
+                                <input type="text" placeholder="أضف ذكر جديد" required>
+                                <input type="number" placeholder="عدد التكرار" min="1" required>
+                                <button type="submit" class="add-button">إضافة ذكر جديد</button>
+                            </div>
+                        </form>
+                        <div class="items-list" id="evening-list"></div>
+                    </div>
+
+                    <div class="tab-content" id="hadith-content">
+                        <form class="add-form">
+                            <div class="form-group">
+                                <input type="text" placeholder="نص الحديث" required>
+                                <input type="text" placeholder="الراوي" required>
+                                <input type="text" placeholder="المصدر" required>
+                                <select required>
+                                    <option value="">درجة الحديث</option>
+                                    <option value="صحيح">صحيح</option>
+                                    <option value="حسن">حسن</option>
+                                    <option value="ضعيف">ضعيف</option>
+                                </select>
+                                <button type="submit" class="add-button">إضافة حديث جديد</button>
+                            </div>
+                        </form>
+                        <div class="items-list" id="hadith-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- إدارة القرآن والأحاديث -->
+            <div class="dashboard-card">
+                <h2>إدارة القرآن والأحاديث</h2>
+                <div class="scripture-manager">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" data-tab="quran">الآيات القرآنية</button>
+                        <button class="tab-btn" data-tab="hadith">الأحاديث النبوية</button>
+                    </div>
+
+                    <!-- قسم الآيات -->
+                    <div class="tab-content active" id="quran-content">
+                        <form class="add-form" id="quranForm">
+                            <select name="category" required>
+                                <option value="">اختر التصنيف</option>
+                                <option value="azkar">آيات الأذكار</option>
+                                <option value="morning">آيات الصباح</option>
+                                <option value="evening">آيات المساء</option>
+                            </select>
+                            <textarea name="text" placeholder="نص الآية" required></textarea>
+                            <input type="text" name="reference" placeholder="السورة ورقم الآية" required>
+                            <textarea name="tafsir" placeholder="التفسير المختصر"></textarea>
+                            <button type="submit">إضافة آية</button>
+                        </form>
+                        <div id="quranList" class="items-list"></div>
+                    </div>
+
+                    <!-- قسم الأحاديث -->
+                    <div class="tab-content" id="hadith-content">
+                        <form class="add-form" id="hadithForm">
+                            <select name="category" required>
+                                <option value="">اختر التصنيف</option>
+                                <option value="azkar">أحاديث الأذكار</option>
+                                <option value="morning">أحاديث الصباح</option>
+                                <option value="evening">أحاديث المساء</option>
+                            </select>
+                            <textarea name="text" placeholder="نص الحديث" required></textarea>
+                            <input type="text" name="narrator" placeholder="الراوي" required>
+                            <input type="text" name="source" placeholder="المصدر" required>
+                            <select name="grade" required>
+                                <option value="">درجة الحديث</option>
+                                <option value="صحيح">صحيح</option>
+                                <option value="حسن">حسن</option>
+                                <option value="ضعيف">ضعيف</option>
+                            </select>
+                            <button type="submit">إضافة حديث</button>
+                        </form>
+                        <div id="hadithList" class="items-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- الإعدادات -->
+            <div class="dashboard-card">
+                <h2>الإعدادات</h2>
+                <div class="settings-panel">
+                    <div class="settings-section">
+                        <h3>إعدادات الحساب</h3>
+                        <div class="setting-item">
+                            <label>اسم المستخدم الحالي</label>
+                            <span id="currentUsername">rashedrabee</span>
+                        </div>
+                        <form id="passwordForm" class="setting-form">
+                            <input type="password" id="currentPassword" placeholder="كلمة المرور الحالية" required>
+                            <input type="password" id="newPassword" placeholder="كلمة المرور الجديدة" required>
+                            <input type="password" id="confirmPassword" placeholder="تأكيد كلمة المرور الجديدة"
+                                required>
+                            <button type="submit" class="save-btn">حفظ كلمة المرور</button>
+                        </form>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>إعدادات التطبيق</h3>
+                        <div class="setting-item">
+                            <label>تفعيل الأصوات
+                                <small>تشغيل أصوات التنبيه عند التسبيح</small>
+                            </label>
+                            <input type="checkbox" id="soundToggleSetting">
+                        </div>
+                        <div class="setting-item">
+                            <label>الوضع الليلي تلقائياً
+                                <small>تفعيل الوضع الليلي حسب وقت النهار</small>
+                            </label>
+                            <input type="checkbox" id="autoDarkMode">
+                        </div>
+                        <div class="setting-item">
+                            <label>عدد التسبيحات للتنبيه
+                                <small>التنبيه عند الوصول لهذا العدد</small>
+                            </label>
+                            <input type="number" id="alertCount" min="1" max="999">
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>إدارة المستخدمين</h3>
+                        <form id="newUserForm" class="setting-form">
+                            <input type="text" id="newUsername" placeholder="اسم المستخدم الجديد" required>
+                            <input type="password" id="newUserPassword" placeholder="كلمة المرور" required>
+                            <input type="password" id="confirmNewPassword" placeholder="تأكيد كلمة المرور" required>
+                            <button type="submit" class="save-btn">إضافة مستخدم جديد</button>
+                        </form>
+                        <div class="users-list" id="usersList">
+                            <!-- قائمة المستخدمين ستظهر هنا -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- التقارير -->
+            <div class="dashboard-card">
+                <h2>تقارير وإحصائيات التسبيح</h2>
+                <div class="reports-panel">
+                    <div class="report-summary">
+                        <div class="summary-card">
+                            <h4>إجمالي التسبيحات</h4>
+                            <div class="value" id="reportTotal">0</div>
+                        </div>
+                        <div class="summary-card">
+                            <h4>معدل التسبيح اليومي</h4>
+                            <div class="value" id="reportAverage">0</div>
+                        </div>
+                        <div class="summary-card">
+                            <h4>تاريخ آخر تسبيح</h4>
+                            <div class="value" id="lastDhikrDate">-</div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="dhikrChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="copyright">
+        <div class="copyright-content">
+            <p>حقوق الملكية الفكرية © 2024</p>
+            <p>تطوير وتصميم: راشد ربيع</p>
+            <small>جميع الحقوق محفوظة</small>
+        </div>
+    </footer>
+
+    <!-- ترتيب المكتبات بشكل صحيح -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/jspdf-autotable@3.5.28/dist/jspdf.plugin.autotable.js"></script>
+    <script src="data/religious-data.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+
+</html>

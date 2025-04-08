@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المسبحة الإلكترونية</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="banner">
+            <span class="banner-emoji">📿</span>
+            <h1>المسبحة الإلكترونية</h1>
+            <a href="login.html" class="admin-btn">لوحة التحكم</a>
+        </div>
+
+        <div class="counter-section">
+            <div class="counter-box">
+                <button class="btn mode-toggle" onclick="toggleDarkMode()">🌙</button>
+                <button class="btn sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
+                <div id="counter">0</div>
+            </div>
+            <div class="controls">
+                <button class="btn" onclick="increment()">تسبيح</button>
+                <button class="btn reset" onclick="reset()">إعادة</button>
+            </div>
+            <div class="tasbeeh-buttons">
+                <button class="tasbeeh-btn" onclick="setDhikr('سبحان الله')">سبحان الله</button>
+                <button class="tasbeeh-btn" onclick="setDhikr('الحمد لله')">الحمد لله</button>
+                <button class="tasbeeh-btn" onclick="setDhikr('الله أكبر')">الله أكبر</button>
+                <button class="tasbeeh-btn" onclick="setDhikr('لا إله إلا الله')">لا إله إلا الله</button>
+            </div>
+        </div>
+
+        <div class="dhikr-section dark-section">
+            <h2>الأذكار</h2>
+            <select id="dhikrCategory" onchange="changeDhikrCategory()">
+                <option value="morning">أذكار الصباح</option>
+                <option value="evening">أذكار المساء</option>
+                <option value="custom">ذكر مخصص</option>
+            </select>
+
+            <div class="dhikr-content" id="dhikrContent"></div>
+
+            <textarea id="customDhikr" placeholder="اكتب الذكر المخصص هنا" style="display: none;"></textarea>
+            <button id="saveCustomBtn" onclick="saveCustomDhikr()" style="display: none;">حفظ</button>
+        </div>
+
+        <div class="quran-section dark-section">
+            <h2>القرآن الكريم والأحاديث</h2>
+            <div class="scripture-tabs">
+                <button class="tab-btn active" data-tab="quran">آيات قرآنية</button>
+                <button class="tab-btn" data-tab="hadith">أحاديث نبوية</button>
+            </div>
+
+            <div class="tab-content active" id="quran-content">
+                <select id="quranCategory">
+                    <option value="azkar">آيات الأذكار</option>
+                    <option value="morning">آيات الصباح</option>
+                    <option value="evening">آيات المساء</option>
+                </select>
+                <div class="verses-list" id="quranVerses"></div>
+            </div>
+
+            <div class="tab-content" id="hadith-content">
+                <select id="hadithCategory">
+                    <option value="azkar">أحاديث الذكر</option>
+                    <option value="morning">أحاديث الصباح</option>
+                    <option value="evening">أحاديث المساء</option>
+                </select>
+                <div class="hadith-list" id="hadithList"></div>
+            </div>
+        </div>
+
+        <div class="radio-section dark-section">
+            <h2>راديو القرآن الكريم</h2>
+            <div class="radio-container">
+                <audio id="quranRadio" preload="none">
+                    <source src="https://Qurango.net/radio/mix" type="audio/mpeg">
+                </audio>
+                <div class="radio-controls">
+                    <button class="btn" id="playRadio" onclick="toggleRadio()">
+                        <span id="radioIcon">▶️</span>
+                    </button>
+                    <div class="volume-control">
+                        <input type="range" id="volumeSlider" min="0" max="100" value="50">
+                    </div>
+                </div>
+                <select id="radioStation" onchange="changeStation()">
+                    <option value="https://Qurango.net/radio/mix">القرآن الكريم (متنوع)</option>
+                    <option value="https://Qurango.net/radio/ahmad_alajmy">أحمد العجمي</option>
+                    <option value="https://Qurango.net/radio/maher_almueaqly">ماهر المعيقلي</option>
+                    <option value="https://Qurango.net/radio/abdulbasit_abdulsamad">عبد الباسط عبد الصمد</option>
+                    <option value="https://Qurango.net/radio/ali_jaber">علي جابر</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="stats-section dark-section">
+            <h2>الإحصائيات اليومية</h2>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-label">عدد التسبيحات اليوم:</span>
+                    <span id="dailyCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">الذكر الحالي:</span>
+                    <span id="lastDhikr">-</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">أكثر ذكر تكراراً:</span>
+                    <span id="mostUsedDhikr">-</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">إجمالي التسبيحات:</span>
+                    <span id="totalCount">0</span>
+                </div>
+                <div class="stat-item date-stats">
+                    <span class="stat-label">آخر تحديث:</span>
+                    <span id="lastUpdate">-</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="social-share">
+            <h3>شارك المسبحة مع أصدقائك</h3>
+            <div class="share-buttons">
+                <button onclick="shareApp('whatsapp')" class="share-btn whatsapp">
+                    📱 WhatsApp
+                </button>
+                <button onclick="shareApp('telegram')" class="share-btn telegram">
+                    ✈️ Telegram
+                </button>
+                <button onclick="shareApp('facebook')" class="share-btn facebook">
+                    👥 Facebook
+                </button>
+                <button onclick="copyLink()" class="share-btn copy">
+                    📋 نسخ الرابط
+                </button>
+            </div>
+        </div>
+
+        <div class="fixed-controls">
+            <button class="scroll-top" onclick="scrollToTop()">⬆️</button>
+            <button class="btn" onclick="showQuickDhikr()">📿</button>
+        </div>
+
+        <!-- إضافة نافذة الذكر السريع -->
+        <div class="quick-dhikr-modal" id="quickDhikrModal">
+            <div class="modal-content">
+                <h3>الذكر السريع المؤقت</h3>
+                <p class="modal-description">اختر عدد التسبيحات المطلوبة</p>
+                <div class="quick-buttons">
+                    <button onclick="quickDhikr(33)">33 تسبيحة</button>
+                    <button onclick="quickDhikr(66)">66 تسبيحة</button>
+                    <button onclick="quickDhikr(99)">99 تسبيحة</button>
+                    <button onclick="quickDhikr(100)">100 تسبيحة</button>
+                </div>
+                <div class="dhikr-progress">
+                    <div class="progress-bar"></div>
+                </div>
+                <button class="close-modal" onclick="closeQuickDhikr()">×</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="copyright">
+        <div class="copyright-content">
+            <p>جميع الحقوق محفوظة © 2024</p>
+            <p>تطوير وتصميم: راشد ربيع</p>
+            <small>لا يسمح بنسخ أو استخدام هذا العمل دون إذن كتابي مسبق</small>
+        </div>
+    </footer>
+
+    <!-- تغيير ترتيب الملفات -->
+    <script src="data/religious-data.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

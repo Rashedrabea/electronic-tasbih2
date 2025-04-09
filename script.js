@@ -1,13 +1,38 @@
 window.onload = function () {
-  const fallbackBanner =
-    "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMjUiIHN0cm9rZT0iIzRhOTBlMiIgc3Ryb2tlLXdpZHRoPSIzIiBmaWxsPSJub25lIi8+CiAgPHRleHQgeD0iMzAiIHk9IjM1IiBmb250LXNpemU9IjIwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNGE5MGUyIj7wn5OPIDwvdGV4dD4KPC9zdmc+";
-
-  const bannerImg = document.querySelector(".banner-img");
-  if (bannerImg) {
-    bannerImg.onerror = function () {
-      this.src = fallbackBanner;
-    };
+  // تحميل الصورة المحفوظة
+  const savedLogo = localStorage.getItem("siteLogo");
+  const bannerImg = document.querySelector(".banner-emoji");
+  if (savedLogo) {
+    const imgContainer = document.createElement("div");
+    imgContainer.style.width = "60px";
+    imgContainer.style.height = "60px";
+    imgContainer.style.borderRadius = "50%";
+    imgContainer.style.backgroundImage = `url(${savedLogo})`;
+    imgContainer.style.backgroundSize = "cover";
+    imgContainer.style.backgroundPosition = "center";
+    bannerImg.innerHTML = "";
+    bannerImg.appendChild(imgContainer);
   }
+
+  // تحميل البيانات المخزنة
+  const storedVerses = localStorage.getItem("quranVerses");
+  const storedHadiths = localStorage.getItem("hadiths");
+  const storedDhikrs = localStorage.getItem("customDhikrs");
+
+  if (storedVerses) {
+    window.quranData = { ...window.quranData, ...JSON.parse(storedVerses) };
+  }
+  if (storedHadiths) {
+    window.hadithData = { ...window.hadithData, ...JSON.parse(storedHadiths) };
+  }
+  if (storedDhikrs) {
+    window.customDhikrs = JSON.parse(storedDhikrs);
+  }
+
+  // تحميل البيانات في واجهة المستخدم
+  loadQuranVerses("azkar");
+  loadHadith("azkar");
+  updateDhikrsList();
 };
 
 document.addEventListener("DOMContentLoaded", function () {
